@@ -1,4 +1,4 @@
-name: surfel_splatting
+name: unbiased_2DGS
 channels:
   - pytorch
   - nvidia
