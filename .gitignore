@@ -1,10 +1,9 @@
-eval/**
-output/**
-reference_depth/**
-submodules/simple-knn/build/**
-.vscode/launch.json
-.vscode/settings.json
-scripts_origin/tmp/**
-
 *.pyc
+.vscode
+output
+build
 *.ply
+eval
+**/tmp
+
+
