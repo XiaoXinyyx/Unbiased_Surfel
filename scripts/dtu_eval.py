@@ -5,12 +5,12 @@ import time
 if __name__ == '__main__':
 
     #dtu_scenes = ['scan24', 'scan37', 'scan40', 'scan55', 'scan63', 'scan65', 'scan69', 'scan83', 'scan97', 'scan105', 'scan106', 'scan110', 'scan114', 'scan118', 'scan122']
-    dtu_scenes = ['scan63', 'scan65']
+    dtu_scenes = ['scan63']
 
     all_scenes = []
     all_scenes.extend(dtu_scenes)  
 
-    python_path = "C:/Users/YangYixin/.conda/envs/surfel_splatting/python"
+    python_path = "C:/Users/YangYixin/.conda/envs/unbiased_2DGS/python"
     output_path = os.path.join(".", "eval", "dtu")
     GS2D_dtu_path = "D:/dataset/DTU_2DGS"
     DTU_Official = "D:/dataset/MVS_Official_Dataset/SampleSet/MVS_Data"
