@@ -1,5 +1,4 @@
 eval/**
-scripts/**
 output/**
 reference_depth/**
 submodules/simple-knn/build/**
