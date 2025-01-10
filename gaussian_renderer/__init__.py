@@ -11,14 +11,7 @@
 
 import torch
 import math
-##from diff_surfel_rasterization import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent_align import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent_converge import GaussianRasterizationSettings, GaussianRasterizer
-from diff_surfel_rasterization_cent_converge import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent_converge_stable import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent_alignWeight import GaussianRasterizationSettings, GaussianRasterizer
-#from diff_surfel_rasterization_cent_render import GaussianRasterizationSettings, GaussianRasterizer
+from diff_surfel_rasterization import GaussianRasterizationSettings, GaussianRasterizer
 from scene.gaussian_model import GaussianModel
 from utils.sh_utils import eval_sh
 from utils.point_utils import depth_to_normal
@@ -47,11 +40,10 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
         tanfovx=tanfovx,
         tanfovy=tanfovy,
         bg=bg_color,
-        ##ndc2world= 导入逆矩阵
         ndc2world= viewpoint_camera.ndc2world,
         scale_modifier=scaling_modifier,
         viewmatrix=viewpoint_camera.world_view_transform,
-        projmatrix=viewpoint_camera.full_proj_transform,  ##从世界坐标系到标准设备坐标系的完整转换
+        projmatrix=viewpoint_camera.full_proj_transform,
         sh_degree=pc.active_sh_degree,
         campos=viewpoint_camera.camera_center,
         prefiltered=False,

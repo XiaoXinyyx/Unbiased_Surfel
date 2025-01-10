@@ -43,7 +43,7 @@ class SceneInfo(NamedTuple):
     ply_path: str
 
 def getNerfppNorm(cam_info):
-    def get_center_and_diag(cam_centers):  ##这个函数的作用是通过给定的一组相机中心，计算出它们的平均中心位置和最大对角线距离，这在处理多个相机的场景中可能用于确定场景的范围或进行一些几何计算。
+    def get_center_and_diag(cam_centers):
         cam_centers = np.hstack(cam_centers)
         avg_cam_center = np.mean(cam_centers, axis=1, keepdims=True)
         center = avg_cam_center
@@ -73,8 +73,8 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder):
         sys.stdout.write("Reading camera {}/{}".format(idx+1, len(cam_extrinsics)))
         sys.stdout.flush()
 
-        extr = cam_extrinsics[key]  ##这是相机的外参
-        intr = cam_intrinsics[extr.camera_id]  ##这是相机的内参
+        extr = cam_extrinsics[key]
+        intr = cam_intrinsics[extr.camera_id]
         height = intr.height
         width = intr.width
 
@@ -131,8 +131,8 @@ def storePly(path, xyz, rgb):
 
 def readColmapSceneInfo(path, images, eval, llffhold=8):
     try:
-        cameras_extrinsic_file = os.path.join(path, "sparse/0", "images.bin")  ##这是相机的外参
-        cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.bin")  ##这个是相机的内参
+        cameras_extrinsic_file = os.path.join(path, "sparse/0", "images.bin")
+        cameras_intrinsic_file = os.path.join(path, "sparse/0", "cameras.bin")
         cam_extrinsics = read_extrinsics_binary(cameras_extrinsic_file)
         cam_intrinsics = read_intrinsics_binary(cameras_intrinsic_file)
     except:

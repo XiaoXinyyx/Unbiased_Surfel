@@ -25,12 +25,6 @@ class GaussianModel:
 
     def setup_functions(self):
 
-        def sigmoid_half(input):
-            return torch.sigmoid(input) * 0.5
-        
-        def inverse_sigmoid_half(input):
-            return inverse_sigmoid(input / 0.5)
-
         def build_covariance_from_scaling_rotation(center, scaling, scaling_modifier, rotation):
             RS = build_scaling_rotation(torch.cat([scaling * scaling_modifier, torch.ones_like(scaling)], dim=-1), rotation).permute(0,2,1)
             trans = torch.zeros((center.shape[0], 4, 4), dtype=torch.float, device="cuda")
@@ -46,8 +40,6 @@ class GaussianModel:
         
         self.opacity_activation = torch.sigmoid
         self.inverse_opacity_activation = inverse_sigmoid
-        #self.opacity_activation = sigmoid_half
-        #self.inverse_opacity_activation = inverse_sigmoid_half
 
         self.rotation_activation = torch.nn.functional.normalize
 

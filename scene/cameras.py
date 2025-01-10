@@ -55,12 +55,12 @@ class Camera(nn.Module):
 
         self.trans = trans
         self.scale = scale
-        #在这里求像素中心的世界坐标
-        self.world_view_transform = torch.tensor(getWorld2View2(R, T, trans, scale)).transpose(0, 1).cuda() ##世界坐标系到相机坐标系
-        self.projection_matrix = getProjectionMatrix(znear=self.znear, zfar=self.zfar, fovX=self.FoVx, fovY=self.FoVy).transpose(0,1).cuda() ##相机坐标系到标准设备坐标系即[-1,1]，标准设备坐标系到像素坐标系还需要考虑图像的宽高
+
+        self.world_view_transform = torch.tensor(getWorld2View2(R, T, trans, scale)).transpose(0, 1).cuda()
+        self.projection_matrix = getProjectionMatrix(znear=self.znear, zfar=self.zfar, fovX=self.FoVx, fovY=self.FoVy).transpose(0,1).cuda()
         self.full_proj_transform = (self.world_view_transform.unsqueeze(0).bmm(self.projection_matrix.unsqueeze(0))).squeeze(0)
         self.camera_center = self.world_view_transform.inverse()[3, :3]
-        self.ndc2world = self.full_proj_transform.inverse()##后面写点内容
+        self.ndc2world = self.full_proj_transform.inverse()
         # self.bnmMatrix = torch.matmul(self.full_proj_transform, self.ndc2world)
     
     def gamma_corrected_image(self, gamma=1.0):

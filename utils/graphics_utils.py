@@ -41,9 +41,9 @@ def getWorld2View2(R, t, translate=np.array([.0, .0, .0]), scale=1.0):
     Rt[:3, 3] = t
     Rt[3, 3] = 1.0
 
-    C2W = np.linalg.inv(Rt)  ##逆矩阵，原本是世界坐标到相机坐标；逆矩阵就是相机坐标到世界坐标
+    C2W = np.linalg.inv(Rt)
     cam_center = C2W[:3, 3]
-    cam_center = (cam_center + translate) * scale  ##相机中心在世界坐标系下的坐标
+    cam_center = (cam_center + translate) * scale
     C2W[:3, 3] = cam_center
     Rt = np.linalg.inv(C2W)
     return np.float32(Rt)

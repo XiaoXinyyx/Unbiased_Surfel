@@ -47,11 +47,7 @@ class ParamGroup:
 class ModelParams(ParamGroup): 
     def __init__(self, parser, sentinel=False):
         self.sh_degree = 3
-        ##输入的数据文件夹
-        # self._source_path = ""
-        ##self._source_path = "/media/kraser/windows-E/3D-Gaussian/DTU/DTU/dtu_scan24/"
-        self._source_path = "/home/kraser/3D-gaussian/DTU/scan63/"
-
+        self._source_path = ""
         self._model_path = ""
         self._images = "images"
         self._resolution = -1

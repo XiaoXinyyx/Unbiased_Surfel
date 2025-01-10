@@ -47,7 +47,7 @@ def training(dataset: ModelParams,
     first_iter = 0
     tb_writer = prepare_output_and_logger(dataset, logger_enabled)
     gaussians = GaussianModel(dataset.sh_degree)
-    scene = Scene(dataset, gaussians, shuffle=False)  ##数据加载
+    scene = Scene(dataset, gaussians, shuffle=False)  ## load data
     gaussians.training_setup(opt)
     scene.training_setup(opt)
     if checkpoint:
@@ -94,7 +94,7 @@ def training(dataset: ModelParams,
         # Image Loss
         gt_image = viewpoint_cam.original_image.cuda()
 
-        # TODO 简单伽马矫正
+        # Simple gamma correction
         # gt_image = gt_image.sqrt()
 
         ssim_value = ssim(image, gt_image)
