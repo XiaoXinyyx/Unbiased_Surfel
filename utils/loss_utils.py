@@ -14,10 +14,6 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from math import exp
 
-# TODO: delete
-def align_loss(align):
-    return (1 - align).mean()
-
 def l1_loss(network_output, gt):
     return torch.abs((network_output - gt)).mean()
 

@@ -85,11 +85,8 @@ class OptimizationParams(ParamGroup):
         self.lambda_dssim = 0.2
         self.lambda_dist = 0.0
         self.lambda_normal = 0.05
-        self.opacity_cull = 0.05
-        self.lambda_align = 0.0 # TODO: delete
         self.lambda_converge = 7.0
-
-        self.gamma_lr = 0.0 # TODO: delete
+        self.opacity_cull = 0.05
 
         self.densification_interval = 100
         self.opacity_reset_interval = 3000

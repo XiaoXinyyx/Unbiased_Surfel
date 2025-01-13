@@ -22,7 +22,7 @@ from tqdm import tqdm
 import uuid
 from argparse import ArgumentParser, Namespace
 
-from utils.loss_utils import l1_loss, ssim, align_loss
+from utils.loss_utils import l1_loss, ssim
 from gaussian_renderer import render, network_gui
 from scene import Scene, GaussianModel
 from utils.general_utils import safe_state
@@ -87,7 +87,7 @@ def training(dataset: ModelParams,
         image, viewspace_point_tensor, visibility_filter, radii = render_pkg["render"], render_pkg["viewspace_points"], render_pkg["visibility_filter"], render_pkg["radii"]
 
         centrate = render_pkg["centrate"] # TODO delete
-        align = render_pkg["align"]
+        align = render_pkg["align"]       # TODO delete
         converge = render_pkg["converge"]
         surf_depth = render_pkg["surf_depth"]
 
@@ -105,10 +105,6 @@ def training(dataset: ModelParams,
         lambda_normal = opt.lambda_normal if iteration > 7000 else 0.0
         lambda_dist = opt.lambda_dist if iteration > 3000 else 0.0
 
-        # (已废弃) 对齐损失
-        lambda_align = 0.00
-        align2P_loss = lambda_align * align_loss(align)
-
         # Converge Loss
         lambda_converge = opt.lambda_converge if iteration > 10000 else 0.00 # TODO: 原来是 7000
         converge_loss = lambda_converge * converge.mean()
@@ -121,7 +117,7 @@ def training(dataset: ModelParams,
         dist_loss = lambda_dist * (rend_dist).mean()
 
         # loss
-        total_loss = loss + dist_loss + normal_loss + align2P_loss + converge_loss
+        total_loss = loss + dist_loss + normal_loss + converge_loss
         
         total_loss.backward()
 
