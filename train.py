@@ -22,7 +22,7 @@ from tqdm import tqdm
 import uuid
 from argparse import ArgumentParser, Namespace
 
-from utils.loss_utils import l1_loss, ssim, eccentricity_loss, align_loss
+from utils.loss_utils import l1_loss, ssim, align_loss
 from gaussian_renderer import render, network_gui
 from scene import Scene, GaussianModel
 from utils.general_utils import safe_state
@@ -86,7 +86,7 @@ def training(dataset: ModelParams,
         render_pkg = render(viewpoint_cam, gaussians, pipe, background)
         image, viewspace_point_tensor, visibility_filter, radii = render_pkg["render"], render_pkg["viewspace_points"], render_pkg["visibility_filter"], render_pkg["radii"]
 
-        centrate = render_pkg["centrate"]
+        centrate = render_pkg["centrate"] # TODO delete
         align = render_pkg["align"]
         converge = render_pkg["converge"]
         surf_depth = render_pkg["surf_depth"]
@@ -105,10 +105,6 @@ def training(dataset: ModelParams,
         lambda_normal = opt.lambda_normal if iteration > 7000 else 0.0
         lambda_dist = opt.lambda_dist if iteration > 3000 else 0.0
 
-        # (已废弃) 离心率
-        lambda_centrate = opt.lambda_centrate if iteration < 3000 else 0.0
-        centrate_loss = lambda_centrate * eccentricity_loss(centrate)
-
         # (已废弃) 对齐损失
         lambda_align = 0.00
         align2P_loss = lambda_align * align_loss(align)
@@ -125,7 +121,7 @@ def training(dataset: ModelParams,
         dist_loss = lambda_dist * (rend_dist).mean()
 
         # loss
-        total_loss = loss + dist_loss + normal_loss + centrate_loss + align2P_loss + converge_loss
+        total_loss = loss + dist_loss + normal_loss + align2P_loss + converge_loss
         
         total_loss.backward()
 
@@ -150,22 +146,6 @@ def training(dataset: ModelParams,
                 progress_bar.set_postfix(loss_dict)
 
                 progress_bar.update(10)
-            
-            # if (iteration % 1000 == 0) or (iteration == first_iter):
-            #     norm_ref_depth = Ref_depth
-            #     norm_ref_depth[norm_ref_depth <= 0.00001] = float("inf")
-            #     norm_ref_depth -= norm_ref_depth.min()
-            #     norm_ref_depth[norm_ref_depth == float("inf")] = 0
-            #     norm_ref_depth /= norm_ref_depth.max()
-            #     norm_ref_depth = norm_ref_depth.repeat(3, 1, 1).cpu()
-
-            #     np_ref_depth = norm_ref_depth.numpy()
-            #     np_ref_depth = np.transpose(np_ref_depth, (1, 2, 0))
-            #     np_ref_depth = cv2.cvtColor(np_ref_depth, cv2.COLOR_RGB2BGR)
-
-            #     # 保存图像
-            #     file_path = ref_depth_path + '/' + str(iteration) + ".hdr"
-            #     cv2.imwrite(file_path, np_ref_depth.astype(np.float32), [cv2.IMWRITE_EXR_TYPE, cv2.IMWRITE_EXR_TYPE_HALF])
 
             if iteration == opt.iterations:
                 progress_bar.close()

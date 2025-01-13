@@ -14,10 +14,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from math import exp
 
-
-def eccentricity_loss(centrate):
-    return (1 - centrate).mean()
-
+# TODO: delete
 def align_loss(align):
     return (1 - align).mean()
 

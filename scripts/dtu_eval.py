@@ -25,7 +25,6 @@ if __name__ == '__main__':
     lambda_normal = 0.05        # 7000 轮后开始
     lambda_dist = 0             # 2D_GS Depth Distortion Loss 1000
     lambda_converge = [7.0]     # 7.0 
-    lambda_centrate = 0         # 0.001
     seeds = [8888] # [x for x in range(8880, 8888)]
     assert densify_until_iter < iterations
 
@@ -46,7 +45,6 @@ if __name__ == '__main__':
                         f"--lambda_normal {lambda_normal}",
                         f"--lambda_dist {lambda_dist}",
                         f"--lambda_converge {lconverge}",
-                        f"--lambda_centrate {lambda_centrate}",
                         f"--iterations {iterations}",
                         f"--densify_until_iter {densify_until_iter}",
                         f"--seed {seed}",
