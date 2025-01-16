@@ -1,8 +1,13 @@
 import os
-import json
-import time
+import sys
 
 if __name__ == '__main__':
+
+    # Path to the dataset of 2D Gaussian splatting
+    TDGS_dtu_path = "D:/dataset/DTU_2DGS"
+
+    # Path to the official DTU dataset
+    DTU_Official = "D:/dataset/MVS_Official_Dataset/SampleSet/MVS_Data"
 
     #dtu_scenes = ['scan24', 'scan37', 'scan40', 'scan55', 'scan63', 'scan65', 'scan69', 'scan83', 'scan97', 'scan105', 'scan106', 'scan110', 'scan114', 'scan118', 'scan122']
     dtu_scenes = ['scan63']
@@ -10,23 +15,21 @@ if __name__ == '__main__':
     all_scenes = []
     all_scenes.extend(dtu_scenes)  
 
-    python_path = "C:/Users/YangYixin/.conda/envs/unbiased_2DGS/python"
+    python_path = sys.executable # Path to python executable
     output_path = os.path.join(".", "eval", "dtu")
-    GS2D_dtu_path = "D:/dataset/DTU_2DGS"
-    DTU_Official = "D:/dataset/MVS_Official_Dataset/SampleSet/MVS_Data"
 
     skip_training = False
     skip_rendering = False
     skip_metrics = False
 
-    densify_until_iter = 20000  # 20000 # 在这之前都要执行 densify
-    iterations = 30000          # 30000
+    densify_until_iter = 20000  # Apply densification before this iteration
+    iterations = 30000
+    assert densify_until_iter < iterations
 
     lambda_normal = 0.05        # 
     lambda_dist = 0             # 2D_GS Depth Distortion Loss
     lambda_converge = 7.0       # Converge Loss
-    seed = 1111 
-    assert densify_until_iter < iterations
+    seed = 1111
 
     for scene in dtu_scenes:
         # ---------------------- Train ----------------------
@@ -46,7 +49,7 @@ if __name__ == '__main__':
                 # f"--logger_enabled", # TODO 开启 logger
             ])
 
-            source = GS2D_dtu_path + "/" + scene
+            source = TDGS_dtu_path + "/" + scene
 
             cmd = python_path + " train.py -s " + source + " -m " + output_path + "/" + scene + " " + common_args
             os.system(cmd)
@@ -63,7 +66,7 @@ if __name__ == '__main__':
                 f"--sdf_trunc 0.016",
                 f"--depth_trunc 3.0",
             ])
-            source = GS2D_dtu_path + "/" + scene
+            source = TDGS_dtu_path + "/" + scene
             cmd = python_path + \
                 f" render.py --iteration {iterations} -s " + \
                 source + " -m" + output_path + "/" + scene + " " + common_args
@@ -86,7 +89,7 @@ if __name__ == '__main__':
                 f"--input_mesh {output_path}/{scene}/train/ours_{iterations}/fuse_post.ply",
                 f"--scan_id {scan_id}",
                 f"--output_dir {output_eval_path}",
-                f"--mask_dir {GS2D_dtu_path}",
+                f"--mask_dir {TDGS_dtu_path}",
                 f"--DTU {DTU_Official}",
             ])
             os.system(cmd)

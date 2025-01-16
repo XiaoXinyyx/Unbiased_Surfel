@@ -90,7 +90,6 @@ def training(dataset: ModelParams,
         radii                  = render_pkg["radii"]
         converge               = render_pkg["converge"]
 
-        align = render_pkg["align"]       # TODO delete
         surf_depth = render_pkg["surf_depth"]
 
         # Image Loss

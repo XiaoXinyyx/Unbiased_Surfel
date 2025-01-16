@@ -95,7 +95,7 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
     else:
         colors_precomp = override_color
     
-    rendered_image, radii, allmap, align, converge = rasterizer(
+    rendered_image, radii, allmap, converge = rasterizer(
         means3D = means3D,
         means2D = means2D,
         shs = shs,
@@ -112,7 +112,6 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
             "viewspace_points": means2D,
             "visibility_filter" : radii > 0,
             "radii": radii,
-            "align" : align,
             "converge" : converge,
     }
 
