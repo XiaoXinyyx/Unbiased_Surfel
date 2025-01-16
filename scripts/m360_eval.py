@@ -64,12 +64,12 @@ for seed in seeds:
 
         common_args = " ".join([
                 "--quiet",
-                "--skip_train", # TODO 不输出训练图像
-                # "--skip_mesh", # TODO 不输出 Mesh
+                "--skip_train",  # Skip rendering training images
+                # "--skip_mesh", # Skip mesh extraction
                 f"--depth_ratio 1.0",
                 f"--eval",
-                f"--voxel_size 0.004", # 0.004
-                f"--sdf_trunc 0.04", # TODO 0.016
+                f"--voxel_size 0.004",
+                f"--sdf_trunc 0.04",
                 f"--depth_trunc 6.0"
             ])
         for scene, source in zip(all_scenes, all_sources):

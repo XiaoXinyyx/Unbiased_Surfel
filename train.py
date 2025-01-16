@@ -42,8 +42,6 @@ def training(dataset: ModelParams,
              checkpoint_iterations,
              checkpoint,
              logger_enabled):
-    
-
     first_iter = 0
     tb_writer = prepare_output_and_logger(dataset, logger_enabled)
     gaussians = GaussianModel(dataset.sh_degree)
@@ -90,11 +88,9 @@ def training(dataset: ModelParams,
         radii                  = render_pkg["radii"]
         converge               = render_pkg["converge"]
 
-        # Image Loss
-        gt_image = viewpoint_cam.original_image.cuda()
-
-        # Simple gamma correction
-        # gt_image = gt_image.sqrt()
+        # Gamma corrected Image
+        gt_image = viewpoint_cam.original_image.cuda().pow(dataset.gamma)
+        gt_image.pow(dataset.gamma)
 
         ssim_value = ssim(image, gt_image)
         Ll1 = l1_loss(image, gt_image)
@@ -149,7 +145,8 @@ def training(dataset: ModelParams,
                 tb_writer.add_scalar('train_loss_patches/dist_loss', ema_dist_for_log, iteration)
                 tb_writer.add_scalar('train_loss_patches/normal_loss', ema_normal_for_log, iteration)
 
-            training_report(tb_writer, iteration, Ll1, loss, l1_loss, iter_start.elapsed_time(iter_end), testing_iterations, scene, render, (pipe, background))
+            training_report(tb_writer, iteration, Ll1, loss, l1_loss, iter_start.elapsed_time(iter_end),
+                            testing_iterations, scene, render, (pipe, background), dataset)
             if (iteration in saving_iterations):
                 print("\n[ITER {}] Saving Gaussians".format(iteration))
                 scene.save(iteration)
@@ -226,7 +223,15 @@ def prepare_output_and_logger(args, logger_enabled):
     return tb_writer
 
 @torch.no_grad()
-def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_iterations, scene : Scene, renderFunc, renderArgs):
+def training_report(
+    tb_writer, iteration,
+    Ll1, loss, l1_loss,
+    elapsed,
+    testing_iterations,
+    scene : Scene,
+    renderFunc,
+    renderArgs,
+    dataset: ModelParams):
     if tb_writer:
         tb_writer.add_scalar('train_loss_patches/reg_loss', Ll1.item(), iteration)
         tb_writer.add_scalar('train_loss_patches/total_loss', loss.item(), iteration)
@@ -239,16 +244,17 @@ def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_i
         validation_configs = ({'name': 'test', 'cameras' : scene.getTestCameras()}, 
                               {'name': 'train', 'cameras' : [scene.getTrainCameras()[idx % len(scene.getTrainCameras())] for idx in range(5, 30, 5)]})
         data = {'test': {}, 'train': {}}
-        # 选择 训练/测试 相机
+
+        # Select cameras for training and testing
         for config in validation_configs:
             if config['cameras'] and len(config['cameras']) > 0:
                 l1_test = 0.0
                 psnr_test = 0.0
-                # 遍历相机
+                # Traverse cameras
                 for idx, viewpoint in enumerate(config['cameras']):
                     render_pkg = renderFunc(viewpoint, scene.gaussians, *renderArgs)
-                    # TODO 对渲染结果伽马矫正
-                    image = torch.clamp(render_pkg["render"], 0.0, 1.0)
+
+                    image = torch.clamp(render_pkg["render"].pow(1.0 / dataset.gamma), 0.0, 1.0)
                     gt_image = torch.clamp(viewpoint.original_image.to("cuda"), 0.0, 1.0)
                     
                     if tb_writer and (idx < 5):
@@ -290,7 +296,7 @@ def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_i
                 data[config['name']][f'{iteration}_psnr'] = psnr_test.item()
                 data[config['name']][f'{iteration}_l1'] = l1_test.item()
         
-        # 将 data 写入 output.json
+        # Write to output.json
         with open(os.path.join(scene.model_path, "output.json"), 'w') as file:
             json.dump(data, file)
 

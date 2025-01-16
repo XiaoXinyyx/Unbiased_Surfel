@@ -45,6 +45,7 @@ if __name__ == '__main__':
                 f"--lambda_converge {lambda_converge}",
                 f"--iterations {iterations}",
                 f"--densify_until_iter {densify_until_iter}",
+                f"--gamma 0.5",
                 f"--seed {seed}",
                 # f"--logger_enabled",
             ])

@@ -57,7 +57,7 @@ if not skip_rendering:
     all_sources = []
     common_args = " ".join([
         " --quiet",
-        "--skip_train",      # 不输出渲染图
+        "--skip_train",      # Skip rendering training images
         "--depth_ratio 1.0",
     ])
 

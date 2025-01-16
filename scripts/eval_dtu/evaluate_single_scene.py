@@ -79,7 +79,6 @@ def cull_scan(scan, mesh_path, result_mesh_file, instance_dir):
             
             # dialate mask similar to unisurf
             maski = masks[i][:, :, 0].astype(np.float32) / 256.
-            # dist(24) 要使 83 没洞，至少要 30
             maski = torch.from_numpy(binary_dilation(maski, disk(24))).float()[None, None].cuda() 
 
             sampled_mask = F.grid_sample(maski, pix_coords[None, None], mode='nearest', padding_mode='zeros', align_corners=True)[0, -1, 0]
