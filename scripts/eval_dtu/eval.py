@@ -165,6 +165,4 @@ if __name__ == '__main__':
             'mean_d2s': mean_d2s,
             'mean_s2d': mean_s2d,
             'overall': over_all,
-            'psnr': 0,
-            'l1': 0,
         }, fp, indent=True)

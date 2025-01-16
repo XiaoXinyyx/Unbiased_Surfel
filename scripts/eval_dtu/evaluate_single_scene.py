@@ -126,6 +126,6 @@ if __name__ == "__main__":
     cull_scan(scan, ply_file, result_mesh_file, instance_dir=os.path.join(args.mask_dir, f'scan{args.scan_id}'))
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    python_path = "C:/Users/YangYixin/.conda/envs/surfel_splatting/python"
+    python_path = "C:/Users/YangYixin/.conda/envs/unbiased_2DGS/python"
     cmd = python_path + f" {script_dir}/eval.py --data {result_mesh_file} --scan {scan} --mode mesh --dataset_dir {Offical_DTU_Dataset} --vis_out_dir {out_dir}"
     os.system(cmd)
