@@ -84,11 +84,14 @@ def training(dataset: ModelParams,
         viewpoint_cam = viewpoint_stack.pop(randint(0, len(viewpoint_stack)-1))
         
         render_pkg = render(viewpoint_cam, gaussians, pipe, background)
-        image, viewspace_point_tensor, visibility_filter, radii = render_pkg["render"], render_pkg["viewspace_points"], render_pkg["visibility_filter"], render_pkg["radii"]
+        image                  = render_pkg["render"]
+        viewspace_point_tensor = render_pkg["viewspace_points"]
+        visibility_filter      = render_pkg["visibility_filter"]
+        radii                  = render_pkg["radii"]
+        converge               = render_pkg["converge"]
 
         centrate = render_pkg["centrate"] # TODO delete
         align = render_pkg["align"]       # TODO delete
-        converge = render_pkg["converge"]
         surf_depth = render_pkg["surf_depth"]
 
         # Image Loss
