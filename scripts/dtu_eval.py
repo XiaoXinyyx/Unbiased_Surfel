@@ -18,8 +18,8 @@ if __name__ == '__main__':
     python_path = sys.executable # Path to python executable
     output_path = os.path.join(".", "eval", "dtu")
 
-    skip_training  = True
-    skip_rendering = True
+    skip_training  = False
+    skip_rendering = False
     skip_metrics   = False
 
     densify_until_iter = 20000  # Apply densification before this iteration
