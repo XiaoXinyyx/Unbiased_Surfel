@@ -10,6 +10,7 @@
 #
 
 import os
+import sys
 from argparse import ArgumentParser
 
 mipnerf360_outdoor_scenes = ["bicycle", "flowers", "garden", "stump", "treehill"]
@@ -17,7 +18,7 @@ mipnerf360_indoor_scenes = ["room", "counter", "kitchen", "bonsai"]
 mipnerf360_outdoor_scenes = ["flowers", "garden", "stump", "treehill"]
 mipnerf360_indoor_scenes = ["room", "counter", "kitchen", "bonsai"]
 
-python_path = "C:/Users/YangYixin/.conda/envs/surfel_splatting/python" 
+python_path = sys.executable
 mipnerf360 = "D:/dataset/MipNerf360"
 
 skip_training = True

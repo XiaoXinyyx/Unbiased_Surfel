@@ -18,9 +18,9 @@ if __name__ == '__main__':
     python_path = sys.executable # Path to python executable
     output_path = os.path.join(".", "eval", "dtu")
 
-    skip_training = False
-    skip_rendering = False
-    skip_metrics = False
+    skip_training  = True
+    skip_rendering = True
+    skip_metrics   = False
 
     densify_until_iter = 20000  # Apply densification before this iteration
     iterations = 30000
@@ -46,7 +46,7 @@ if __name__ == '__main__':
                 f"--iterations {iterations}",
                 f"--densify_until_iter {densify_until_iter}",
                 f"--seed {seed}",
-                # f"--logger_enabled", # TODO 开启 logger
+                # f"--logger_enabled",
             ])
 
             source = TDGS_dtu_path + "/" + scene
