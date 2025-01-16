@@ -90,8 +90,6 @@ def training(dataset: ModelParams,
         radii                  = render_pkg["radii"]
         converge               = render_pkg["converge"]
 
-        surf_depth = render_pkg["surf_depth"]
-
         # Image Loss
         gt_image = viewpoint_cam.original_image.cuda()
 
@@ -100,18 +98,18 @@ def training(dataset: ModelParams,
 
         ssim_value = ssim(image, gt_image)
         Ll1 = l1_loss(image, gt_image)
-        loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1.0 - ssim_value)  ##opt.lambda_dssim == 0.2
+        loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * (1.0 - ssim_value)
 
         # regularization
         lambda_normal = opt.lambda_normal if iteration > 7000 else 0.0
         lambda_dist = opt.lambda_dist if iteration > 3000 else 0.0
 
         # Converge Loss
-        lambda_converge = opt.lambda_converge if iteration > 10000 else 0.00 # TODO: 原来是 7000
+        lambda_converge = opt.lambda_converge if iteration > 10000 else 0.00
         converge_loss = lambda_converge * converge.mean()
 
-        rend_dist = render_pkg["rend_dist"]  
-        rend_normal  = render_pkg['rend_normal']
+        rend_dist   = render_pkg["rend_dist"]  
+        rend_normal = render_pkg['rend_normal']
         surf_normal = render_pkg['surf_normal']
         normal_error = (1 - (rend_normal * surf_normal).sum(dim=0))[None]
         normal_loss = lambda_normal * (normal_error).mean()
@@ -137,7 +135,6 @@ def training(dataset: ModelParams,
                     "distort": f"{ema_dist_for_log:.{5}f}",
                     "normal": f"{ema_normal_for_log:.{5}f}",
                     "converge": f"{ema_converge_for_log:.{5}f}",
-                    "lambda_converge" : f"{lambda_converge:.{5}f}", 
                     "Points": f"{len(gaussians.get_xyz)}"  
                 }
                 progress_bar.set_postfix(loss_dict)
@@ -164,7 +161,6 @@ def training(dataset: ModelParams,
 
                 if iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
                     size_threshold = 20 if iteration > opt.opacity_reset_interval else None
-                    # TODO 缩减高斯尺寸，原始为 cameras_extent
                     gaussians.densify_and_prune(opt.densify_grad_threshold, opt.opacity_cull, scene.cameras_extent, size_threshold)
                 
                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
@@ -174,10 +170,8 @@ def training(dataset: ModelParams,
             if iteration < opt.iterations:
                 gaussians.optimizer.step()
                 gaussians.optimizer.zero_grad(set_to_none = True)
-                #scene.optimizer.step()
-                #scene.optimizer.zero_grad(set_to_none = True)
 
-            # TODO 限制 scale
+            # Maximum size limit
             if iteration >= opt.densify_until_iter:
                 gaussians.clamp_scaling(torch.tensor(0.1 * scene.cameras_extent).cuda())
 
@@ -216,7 +210,7 @@ def prepare_output_and_logger(args, logger_enabled):
         else:
             unique_str = str(uuid.uuid4())
         args.model_path = os.path.join("./output/", unique_str[0:10])
-        
+
     # Set up output folder
     print("Output folder: {}".format(args.model_path))
     os.makedirs(args.model_path, exist_ok = True)
