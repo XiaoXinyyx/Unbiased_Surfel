@@ -4,13 +4,12 @@ import sys
 if __name__ == '__main__':
 
     # Path to the dataset of 2D Gaussian splatting
-    TDGS_dtu_path = "D:/dataset/DTU_2DGS"
+    TDGS_dtu_path = "/dataset/DTU_2DGS"
 
     # Path to the official DTU dataset
-    DTU_Official = "D:/dataset/MVS_Official_Dataset/SampleSet/MVS_Data"
+    DTU_Official = "/dataset/MVS_Official_Dataset/SampleSet/MVS_Data"
 
-    #dtu_scenes = ['scan24', 'scan37', 'scan40', 'scan55', 'scan63', 'scan65', 'scan69', 'scan83', 'scan97', 'scan105', 'scan106', 'scan110', 'scan114', 'scan118', 'scan122']
-    dtu_scenes = ['scan63']
+    dtu_scenes = ['scan24', 'scan37', 'scan40', 'scan55', 'scan63', 'scan65', 'scan69', 'scan83', 'scan97', 'scan105', 'scan106', 'scan110', 'scan114', 'scan118', 'scan122']
 
     all_scenes = []
     all_scenes.extend(dtu_scenes)  
