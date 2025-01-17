@@ -50,7 +50,42 @@ python train.py -s <path to COLMAP or NeRF Synthetic dataset>
 
 Commandline arguments for regularizations
 ```
+--lambda_normal   # hyperparameter for normal consistency
+--lambda_converge # hyperparameter for depth converge (Ours)
+--lambda_dist     # hyperparameter for depth converge (2DGS)
+```
 
+# Testing
+## Bounded Mesh Extraction
+To export a mesh within a bounded volume, simply use
+```
+python render.py -m <path to pre-trained model> -s <path to COLMAP dataset> 
+```
+Commandline arguments you should adjust accordingly for meshing for bounded TSDF fusion, use
+```
+--voxel_size # voxel size
+--depth_trunc # depth truncation
+```
+If these arguments are not specified, the script will automatically estimate them using the camera information.
+
+## Unbounded Mesh Extraction
+To export a mesh with an arbitrary size, we devised an unbounded TSDF fusion with space contraction and adaptive truncation.
+```
+python render.py -m <path to pre-trained model> -s <path to COLMAP dataset> --mesh_res 1024
+```
+
+# Full evaluation
+
+We provide scripts to evaluate our method on [Mip-NeRF 360](https://jonbarron.info/mipnerf360/), [Tanks and Template](https://www.tanksandtemples.org/download/) and [DTU](https://drive.google.com/drive/folders/1SJFgt8qhQomHX55Q4xSvYE2C6-8tFll9) dataset.
+```
+# DTU dataset
+python scripts/dtu_eval.py
+
+# Mip-NeRF 360 dataset
+python scripts/m360_eval.py
+
+# Tanks and Template dataset
+python scripts/tnt_eval.py
 ```
 
 # Acknowledgements
