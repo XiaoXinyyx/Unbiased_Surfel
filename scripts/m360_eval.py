@@ -38,7 +38,6 @@ if not skip_training:
     common_args = " ".join([
         "--quiet",
         "--test_iterations -1",
-        "--depth_ratio 1.0",
         # "-r 2",
         "--lambda_dist 0",
         "--lambda_centrate 0",
@@ -64,7 +63,6 @@ if not skip_rendering:
             "--quiet",
             "--skip_train",  # Skip rendering training images
             # "--skip_mesh", # Skip mesh extraction
-            f"--depth_ratio 1.0",
             f"--eval",
             f"--voxel_size 0.004",
             f"--sdf_trunc 0.04",
