@@ -3,7 +3,7 @@ import sys
 
 if __name__ == '__main__':
 
-    # Path to the dataset of 2D Gaussian splatting
+    # Path to the DTU dataset of 2D Gaussian splatting
     TDGS_dtu_path = "/dataset/DTU_2DGS"
 
     # Path to the official DTU dataset
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     iterations = 30000
     assert densify_until_iter < iterations
 
-    lambda_normal = 0.05        # 
+    lambda_normal = 0.05         
     lambda_dist = 0             # 2D_GS Depth Distortion Loss
     lambda_converge = 7.0       # Converge Loss
     seed = 1111
@@ -35,7 +35,6 @@ if __name__ == '__main__':
         if not skip_training:
             common_args = " ".join([
                 "--quiet",
-                f"--depth_ratio 1.0",
                 f"-r 2",
                 f"--test_iterations {iterations}",
                 f"--save_iterations {iterations}",
@@ -60,7 +59,6 @@ if __name__ == '__main__':
             common_args = " ".join([
                 "--quiet",
                 "--skip_train",
-                f"--depth_ratio 1.0",
                 f"--num_cluster 1",
                 f"--voxel_size 0.004",
                 f"--sdf_trunc 0.016",

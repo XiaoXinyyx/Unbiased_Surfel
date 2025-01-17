@@ -123,10 +123,6 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
     render_normal = allmap[2:5]
     render_normal = (render_normal.permute(1,2,0) @ (viewpoint_camera.world_view_transform[:3,:3].T)).permute(2,0,1)
     
-    # get median depth map
-    render_depth_median = allmap[5:6]
-    render_depth_median = torch.nan_to_num(render_depth_median, 0, 0)
-
     # get expected depth map
     render_depth_expected = allmap[0:1]
     render_depth_expected = (render_depth_expected / render_alpha)
@@ -135,11 +131,8 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
     # get depth distortion map
     render_dist = allmap[6:7]
 
-    # psedo surface attributes
-    # surf depth is either median or expected by setting depth_ratio to 1 or 0
-    # for bounded scene, use median depth, i.e., depth_ratio = 1; 
-    # for unbounded scene, use expected depth, i.e., depth_ration = 0, to reduce disk anliasing.
-    surf_depth = render_depth_expected * (1 - pipe.depth_ratio) + pipe.depth_ratio * render_depth_median
+    # psedo surface attributes. See Eq. 9 in Unbiased Depth paper
+    surf_depth = torch.nan_to_num(allmap[5:6], 0, 0)
     
     # assume the depth points form the 'surface' and generate psudo surface normal for regularizations.
     surf_normal = depth_to_normal(viewpoint_camera, surf_depth)

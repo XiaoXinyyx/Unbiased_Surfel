@@ -31,7 +31,6 @@ if not skip_training:
     common_args = " ".join([
         " --quiet",
         "--test_iterations -1",
-        "--depth_ratio 1.0",
         "-r 2",
         "--lambda_dist 0",
         "--lambda_centrate 0",
@@ -58,7 +57,6 @@ if not skip_rendering:
     common_args = " ".join([
         " --quiet",
         "--skip_train",      # Skip rendering training images
-        "--depth_ratio 1.0",
     ])
 
     for scene in tnt_360_scenes:

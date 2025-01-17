@@ -67,7 +67,6 @@ class PipelineParams(ParamGroup):
     def __init__(self, parser):
         self.convert_SHs_python = False
         self.compute_cov3D_python = False
-        self.depth_ratio = 0.0
         self.debug = False
         super().__init__(parser, "Pipeline Parameters")
 
@@ -91,8 +90,8 @@ class OptimizationParams(ParamGroup):
 
         self.densification_interval = 100
         self.opacity_reset_interval = 3000
-        self.densify_from_iter = 500
-        self.densify_until_iter = 15_000
+        self.densify_from_iter      = 500
+        self.densify_until_iter     = 20000
         self.densify_grad_threshold = 0.0002
         super().__init__(parser, "Optimization Parameters")
 
