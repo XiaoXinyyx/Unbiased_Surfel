@@ -2,17 +2,17 @@ import os
 import sys
 from argparse import ArgumentParser
 
+# Path to the TnT dataset
+TNT_data = "/dataset/TNT_GOF/TrainingSet"
+
 tnt_360_scenes = ['Barn', 'Caterpillar', 'Ignatius', 'Truck']
 tnt_large_scenes = ['Meetingroom', 'Courthouse']
-tnt_360_scenes = ['Caterpillar', 'Ignatius', 'Truck']
-tnt_large_scenes = []
 
 python_path = sys.executable
-TNT_data = "D:\\dataset\\TNT_GOF\\TrainingSet"
 
 lambda_converge = 7.0
 iteration = 30000
-seed = 8887
+seed = 1111
 
 skip_training = False
 skip_rendering = False
