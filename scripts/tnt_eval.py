@@ -33,7 +33,6 @@ if not skip_training:
         "--test_iterations -1",
         "-r 2",
         "--lambda_dist 0",
-        "--lambda_centrate 0",
         f"--lambda_converge {lambda_converge}",
         "--densify_until_iter 20000",
         f"--seed {seed}"
