@@ -25,8 +25,8 @@ if __name__ == '__main__':
     iterations = 30000
     assert densify_until_iter < iterations
 
-    lambda_normal = 0.05         
-    lambda_dist = 0             # 2D_GS Depth Distortion Loss
+    lambda_normal = 0.05        # 2D_GS Normal Consistency
+    lambda_dist = 0             # 2D_GS Depth Distortion
     lambda_converge = 7.0       # Converge Loss
     seed = 1111
 
