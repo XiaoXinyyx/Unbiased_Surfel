@@ -15,7 +15,6 @@ if __name__ == '__main__':
     all_scenes.extend(dtu_scenes)  
 
     python_path = sys.executable # Path to python executable
-    output_path = os.path.join(".", "eval", "dtu")
 
     skip_training  = False
     skip_rendering = False
@@ -28,9 +27,11 @@ if __name__ == '__main__':
     lambda_normal = 0.05        # 2D_GS Normal Consistency
     lambda_dist = 0             # 2D_GS Depth Distortion
     lambda_converge = 7.0       # Converge Loss
-    seed = 1111
+    seed = 1
 
     for scene in dtu_scenes:
+        output_path = os.path.join(".", "eval", "dtu", scene)
+
         # ---------------------- Train ----------------------
         if not skip_training:
             common_args = " ".join([
@@ -50,7 +51,7 @@ if __name__ == '__main__':
 
             source = TDGS_dtu_path + "/" + scene
 
-            cmd = python_path + " train.py -s " + source + " -m " + output_path + "/" + scene + " " + common_args
+            cmd = python_path + " train.py -s " + source + " -m " + output_path + " " + common_args
             os.system(cmd)
 
         # ---------------------- Extract Mesh ----------------------
@@ -67,7 +68,7 @@ if __name__ == '__main__':
             source = TDGS_dtu_path + "/" + scene
             cmd = python_path + \
                 f" render.py --iteration {iterations} -s " + \
-                source + " -m" + output_path + "/" + scene + " " + common_args
+                source + " -m" + output_path + " " + common_args
             os.system(cmd)
 
         # ------------------------ Evaluate ------------------------
@@ -84,7 +85,7 @@ if __name__ == '__main__':
             cmd = " ".join([
                 python_path,
                 f"{script_dir}/eval_dtu/evaluate_single_scene.py",
-                f"--input_mesh {output_path}/{scene}/train/ours_{iterations}/fuse_post.ply",
+                f"--input_mesh {output_path}/train/ours_{iterations}/fuse_post.ply",
                 f"--scan_id {scan_id}",
                 f"--output_dir {output_eval_path}",
                 f"--mask_dir {TDGS_dtu_path}",
