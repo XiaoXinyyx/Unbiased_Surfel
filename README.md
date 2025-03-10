@@ -3,11 +3,11 @@
   <h1 align="center">Introducing Unbiased Depth into 2D Gaussian Splatting for
   High-accuracy Surface Reconstruction</h1>
   <p align="center">
-    <a href="https://zhouyangvcc.github.io/">Yang Zhou</a>
-    ·
     <a>Xiaomin Peng</a>
     ·
     <a>Yixin Yang</a>
+    ·
+    <a href="https://zhouyangvcc.github.io/">Yang Zhou</a>
     ·
     <a href="https://vcc.tech/~huihuang">Hui Huang</a>
   </p>
