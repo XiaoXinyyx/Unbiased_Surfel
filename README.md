@@ -3,7 +3,7 @@
   <h1 align="center">Introducing Unbiased Depth into 2D Gaussian Splatting for
   High-accuracy Surface Reconstruction</h1>
   <p align="center">
-    <a>Xiaomin Peng</a>
+    <a>Xiaoming Peng</a>
     ·
     <a>Yixin Yang</a>
     ·
@@ -13,7 +13,7 @@
   </p>
 
 
-  <h3 align="center"><a href="">Paper</a> | <a href="">arXiv</a> </h3>
+  <h3 align="center"><a href="">Paper</a> | <a href="https://export.arxiv.org/abs/2503.06587">arXiv</a> </h3>
   <div align="center"></div>
 </p>
 
@@ -101,12 +101,12 @@ If you find our code or paper useful, please cite
 
 
 ```bibtex
-@inproceedings{Huang2DGS2024,
-    title={2D Gaussian Splatting for Geometrically Accurate Radiance Fields},
-    author={Huang, Binbin and Yu, Zehao and Chen, Anpei and Geiger, Andreas and Gao, Shenghua},
-    publisher = {Association for Computing Machinery},
-    booktitle = {SIGGRAPH 2024 Conference Papers},
-    year      = {2024},
-    doi       = {10.1145/3641519.3657428}
+@misc{peng2025introducing,
+    title={Introducing Unbiased Depth into 2D Gaussian Splatting for High-accuracy Surface Reconstruction},
+    author={Xiaoming Peng and Yixin Yang and Yang Zhou and Hui Huang},
+    year={2025},
+    eprint={2503.06587},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
 }
 ```
