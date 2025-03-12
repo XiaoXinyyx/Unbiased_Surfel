@@ -13,7 +13,7 @@
   </p>
 
 
-  <h3 align="center"><a href="">Paper</a> | <a href="https://export.arxiv.org/abs/2503.06587">arXiv</a> </h3>
+  <h3 align="center"><a href="https://export.arxiv.org/pdf/2503.06587">Paper</a> | <a href="https://export.arxiv.org/abs/2503.06587">arXiv</a> </h3>
   <div align="center"></div>
 </p>
 
