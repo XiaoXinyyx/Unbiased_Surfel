@@ -38,6 +38,10 @@ git clone git@github.com:XiaoXinyyx/Unbiased_Surfel.git --recursive
 # if not, create a new environment
 conda env create --file environment.yml
 conda activate unbiased_surfel
+
+# We modified the cuda rasterizer
+cd Unbiased_Surfel
+pip install ./submodules/diff-surfel-rasterization
 ```
 
 # Training
