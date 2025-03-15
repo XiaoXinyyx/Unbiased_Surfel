@@ -39,8 +39,8 @@ if not skip_training:
         "--quiet",
         "--test_iterations -1",
         # "-r 2",
+        # "--eval", # Only required when NVS
         "--lambda_dist 0",
-        "--lambda_centrate 0",
         f"--lambda_converge {lambda_converge}",
         "--densify_until_iter 20000",
         f"--seed {seed}"
