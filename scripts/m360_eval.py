@@ -38,8 +38,7 @@ if not skip_training:
     common_args = " ".join([
         "--quiet",
         "--test_iterations -1",
-        # "-r 2",
-        # "--eval", # Only required when NVS
+        "--eval", # Only required when NVS
         "--lambda_dist 0",
         f"--lambda_converge {lambda_converge}",
         "--densify_until_iter 20000",
@@ -47,10 +46,12 @@ if not skip_training:
     ])
     for scene in mipnerf360_outdoor_scenes:
         source = mipnerf360 + "/" + scene
-        os.system(python_path + " train.py -s " + source + " -i images_4 -m " + output_path + "/" + scene + " " + common_args)
+        os.system(python_path + " train.py -s " + source + " -m " +\
+                  " -r 4 " + output_path + "/" + scene + " " + common_args)
     for scene in mipnerf360_indoor_scenes:
         source = mipnerf360 + "/" + scene
-        os.system(python_path + " train.py -s " + source + " -i images_2 -m " + output_path + "/" + scene + " " + common_args)
+        os.system(python_path + " train.py -s " + source + " -m " +\
+                  " -r 2 " + output_path + "/" + scene + " " + common_args)
 
 if not skip_rendering:
     all_sources = []
