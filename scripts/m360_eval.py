@@ -46,12 +46,10 @@ if not skip_training:
     ])
     for scene in mipnerf360_outdoor_scenes:
         source = mipnerf360 + "/" + scene
-        os.system(python_path + " train.py -s " + source + " -m " +\
-                  " -r 4 " + output_path + "/" + scene + " " + common_args)
+        os.system(python_path + " train.py -s " + source + " -m " + output_path + "/" + scene + " " + common_args + " -r 4 ")
     for scene in mipnerf360_indoor_scenes:
         source = mipnerf360 + "/" + scene
-        os.system(python_path + " train.py -s " + source + " -m " +\
-                  " -r 2 " + output_path + "/" + scene + " " + common_args)
+        os.system(python_path + " train.py -s " + source + " -m " + output_path + "/" + scene + " " + common_args + " -r 2 ")
 
 if not skip_rendering:
     all_sources = []
