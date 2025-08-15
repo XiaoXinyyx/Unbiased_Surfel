@@ -101,7 +101,7 @@ If you find our code or paper useful, please cite
 ```bibtex
 @misc{peng2025introducing,
     title={Introducing Unbiased Depth into 2D Gaussian Splatting for High-accuracy Surface Reconstruction},
-    author={Xiaoming Peng and Yixin Yang and Yang Zhou and Hui Huang},
+    author={Yixin Yang and Yang Zhou and Hui Huang},
     year={2025},
     eprint={2503.06587},
     archivePrefix={arXiv},
