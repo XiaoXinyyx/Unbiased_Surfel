@@ -11,8 +11,11 @@
   </p>
 
 
-  <h3 align="center"><a href="https://export.arxiv.org/pdf/2503.06587">Paper</a> | <a href="https://export.arxiv.org/abs/2503.06587">arXiv</a> </h3>
-  <div align="center"></div>
+  <div align="center">
+ <a href='https://arxiv.org/abs/2503.06587'><img src='https://img.shields.io/badge/arXiv-2503.06587-b31b1b.svg'></a> &nbsp;&nbsp;
+ <a href='https://xiaoxinyyx.github.io/unbiased-gs/'><img src='https://img.shields.io/badge/Project-Page-Green'></a>
+</div>
+
 </p>
 
 
